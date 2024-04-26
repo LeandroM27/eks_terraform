@@ -2182,9 +2182,9 @@ prometheusOperator:
   ## Port to expose on each node
   ## Only used if service.type is 'NodePort'
   ##
-    nodePort: 30080
+    nodePort: 30081
 
-    nodePortTls: 30443
+    nodePortTls: 30449
 
   ## Additional ports to open for Prometheus operator service
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#multi-port-services
@@ -2204,7 +2204,7 @@ prometheusOperator:
   ## Service type
   ## NodePort, ClusterIP, LoadBalancer
   ##
-    type: ClusterIP
+    type: ClusterIP   #
 
     ## List of IP addresses at which the Prometheus server service is available
     ## Ref: https://kubernetes.io/docs/user-guide/services/#external-ips
@@ -2644,7 +2644,7 @@ prometheus:
 
     ## Service type
     ##
-    type: ClusterIP
+    type: NodePort
 
     ## Additional ports to open for Prometheus service
     ##

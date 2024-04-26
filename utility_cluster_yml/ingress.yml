@@ -20,7 +20,7 @@ metadata:
     alb.ingress.kubernetes.io/healthy-threshold-count: '2'
     alb.ingress.kubernetes.io/unhealthy-threshold-count: '2'
     # External DNS - For creating a Record Set in Route53 to change this you need to change frontend route to same
-    external-dns.alpha.kubernetes.io/hostname: jenkins.mycloudprojects.uk, sonar.mycloudprojects.uk, grafana.mycloudprojects.uk
+    external-dns.alpha.kubernetes.io/hostname: jenkins.mycloudprojects.uk, sonar.mycloudprojects.uk, grafana.mycloudprojects.uk, prome.mycloudprojects.uk
 spec:
   ingressClassName: my-aws-ingress-class-dev # Ingress Class
   rules:
@@ -54,6 +54,16 @@ spec:
             name: kube-prometheus-stack-dev-grafana
             port:
               number: 80
+  - host: prome.mycloudprojects.uk
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: kube-prometheus-stack-dev-prometheus
+            port:
+              number: 9090
       
 # 1. If  "spec.ingressClassName: my-aws-ingress-class" not specified, will reference default ingress class on this kubernetes cluster
 # 2. Default Ingress class is nothing but for which ingress class we have the annotation `ingressclass.kubernetes.io/is-default-class: "true"`

@@ -8,7 +8,7 @@ resource "helm_release" "kube-prometheus-stack-chart" {
   # namespace = kubernetes_namespace.prometheus-stack.metadata[0].name
   namespace = "default"
 
-  # this custom values from line 928 to line 968 were modify so grafana creates an ingress so the service is expose by an alb
+  # this custom values from line 928 to line 968 were modify so grafana creates an ingress so the service is expose by an alb, also change line 2647 to NodePort
 
   values = ["${file("logstack-values.yaml")}"] 
 

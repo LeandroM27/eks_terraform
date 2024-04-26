@@ -109,7 +109,7 @@ resource "kubernetes_config_map" "docker_config" {
 }
 
 
-// dont forget to set the service type to NodePort in the values
+// dont forget to set the service type to NodePort in the values, custom agent set in line 909
 
 resource "helm_release" "jenkins" {
   count = var.project_name == "utility-cluster" ? 1 : 0
