@@ -1,3 +1,5 @@
+
+---
 apiVersion: apps/v1
 kind: Deployment 
 metadata:
@@ -13,9 +15,46 @@ spec:
     metadata:
       labels: 
         app: java-backend
-    spec:      
+    spec:
+      serviceAccountName: "utility-cluster-aws-secrets-dev" # this needs to be dynamic
+      # volumes:
+      # - name: secrets-store-inline # volume with secrets
+      #   csi:
+      #     driver: secrets-store.csi.k8s.io
+      #     readOnly: true
+      #     volumeAttributes:
+      #       secretProviderClass: "eks-test-secret" # name of secret_provider_class      
       containers:
-        - name: java-backend
-          image: 438555236323.dkr.ecr.us-east-1.amazonaws.com/gradle_app:latest  
-          ports: 
-            - containerPort: 8080
+      - name: java-backend
+        image: 438555236323.dkr.ecr.us-east-1.amazonaws.com/gradle_app:latest  
+        ports: 
+        - containerPort: 9000
+      #   volumeMounts:
+      #   - name: secrets-store-inline
+      #     mountPath: "/mnt/secrets-store" # mounting volume
+      #     readOnly: true
+      #   env:
+      #   - name: SPRING_DATASOURCE_URL 
+      #     valueFrom:
+      #       secretKeyRef:
+      #         name: gradle-app-secrets 
+      #         key: database-url
+      #   - name: SPRING_DATASOURCE_USERNAME 
+      #     valueFrom:
+      #       secretKeyRef:
+      #         name: gradle-app-secrets
+      #         key: db-user
+      #   - name: SPRING_DATASOURCE_PASSWORD 
+      #     valueFrom:
+      #       secretKeyRef:
+      #         name: gradle-app-secrets
+      #         key: db-pass
+      # volumes:
+      #   - name: secrets-store-inline
+      #     csi:
+      #       driver: secrets-store.csi.k8s.io
+      #       readOnly: true
+      #       volumeAttributes:
+      #         secretProviderClass: eks-test-secret
+      # securityContext:
+      #   fsGroup: 65534 

@@ -5,7 +5,10 @@ resource "helm_release" "sonarqube" {
   name       = "${var.project_name}-sonarqube-${var.environment}"
   repository = "https://SonarSource.github.io/helm-chart-sonarqube"
   chart      = "sonarqube"
-  version    = "10.0.0+521"
+  version    = "8.0.5+2802" # changed helm chart to a version that uses a version of sonar that supports java 11, changed default values to the ones for the new version
+  namespace  = "dev"
+
+  #edited this lines on default values 391 and 52, line 68 defines in which namespace prometheus lives
 
   values = [
     file("${path.module}/sonarqube-values.yml")
@@ -34,6 +37,6 @@ resource "helm_release" "sonarqube" {
 
 
   depends_on = [
-    aws_eks_node_group.private-nodes, aws_db_instance.rds[0]
+    aws_eks_node_group.private-nodes, aws_db_instance.rds[0], kubernetes_namespace.apps
   ]
 }

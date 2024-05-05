@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: dev
+  name: sonarqube #imp
+  labels:
+    app: sonarqube-monitoring # this is the label use in service monitor
+spec:
+  type: ClusterIP
+  # from default values
+  ports:
+    - name: monitoring-web
+      port: 8000
+      targetPort: monitoring-web # need to match the name in the pod
+    - name: monitoring-ce
+      port: 8001
+      targetPort: monitoring-ce # need to match the name in the pod
+  selector:
+    app: sonarqube #imp
+    release: utility-cluster-sonarqube-dev #imp can be seen in main service

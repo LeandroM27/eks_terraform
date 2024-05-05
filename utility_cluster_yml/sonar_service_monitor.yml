@@ -1,0 +1,19 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: myapp
+  namespace: dev # must have the label for prometheus to discover things in that namespace
+  labels:
+    prometheus: main
+    release: kube-prometheus-stack-dev # need to be use because of my helm chart
+spec:
+  namespaceSelector:
+    matchNames:
+      - dev
+  selector:
+    matchLabels:
+      app: sonarqube-monitoring
+  endpoints:
+    - port: monitoring-ce
+    - port: monitoring-web

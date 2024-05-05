@@ -33,3 +33,5 @@ variable sonar_db_username {}
 variable sonar_db_password {}
 variable rds_storage_type {}
 variable rds_instance {}
+variable java_db_username {}
+variable java_db_password {}
